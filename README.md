@@ -104,6 +104,10 @@ Using your SSH terminal type the command ```$ cd ~/klipper``` to navigate to the
 
 After you are done with these options hit "Q" to save and quit this menu. In the terminal type ```$ make``` to start the series of scripts that will create an incomplete version of printer firmware. This isn't quite done yet. There is a python script that needs to make some changes to the file. Run the following to modify the binary with LCD screen enabled ```$ ./scripts/update_mks_robin.py out/klipper.bin out/Robin_nano.bin```. Alternatively, if you want to disable the LCD where you can remove the LCD board/cable run the following to modify the binary ```$ ./scripts/update_mks_robin.py out/klipper.bin out/Robin_nano43.bin```.
 
+### Flash printer firmware
+
+Now use your web browser to visit “http://your-hostname.local/Robin_nano.bin” You will get a bin file, put it into a SD card. You are ready to flash the Klipper firmware to the printer. With the printer off, place the SD card into the printer's card slot, and then power the printer on. It should immediately flash the firmware. There is a status bar that comes up on screen while it is updating but disappears as soon as the job is complete. This is very fast and easy to miss.
+
 ### Printer configuration files
 
 If you are running the board without modifying the stepper driver configuration (soldering required), then copy the following "Basic configuration" files from this github repo for your printer and add them to the list in the Mainsail webpage server under the left panel Machine tab > Config Files. If you do not plan to do any modifications in the future, simply use the upload tool in the Config Files window to add what is needed. 
