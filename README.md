@@ -1,5 +1,6 @@
 # Klipper KP3S
-![raw=true)
+
+![alt text](https://github.com/Upcycle-Electronics/Klipper-KingRoon-Printers/blob/main/pic/banner.png?raw=true)
 
 # Meta
 
