@@ -2,7 +2,7 @@
 
 ![alt text](https://github.com/Upcycle-Electronics/Klipper-KingRoon-Printers/blob/main/pic/banner.png?raw=true)
 
-<details><summary>### Meta</summary>
+<details><summary> **Meta** </summary>
 
 - Authors: Georgiy N., Jake L.
 - Last Modified: August 2022
