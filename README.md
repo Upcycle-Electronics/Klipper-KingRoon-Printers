@@ -102,17 +102,23 @@ Using your SSH terminal type the command ```$ cd ~/klipper``` to navigate to the
 
 ![alt text](https://github.com/Upcycle-Electronics/Klipper-KingRoon-Printers/blob/main/pic/GD32.jpg?raw=true)
 
-After you are done with these options hit "Q" to save and quit this menu. In the terminal type ```$ make``` to start the series of scripts that will create an incomplete version of printer firmware. This isn't quite done yet. There is a python script that needs to make some changes to the file. Run the following to modify the binary with LCD screen enabled ```$ ./scripts/update_mks_robin.py out/klipper.bin out/Robin_nano.bin```. Alternatively, if you want to disable the LCD where you can remove the LCD board/cable run the following to modify the binary ```$ ./scripts/update_mks_robin.py out/klipper.bin out/Robin_nano43.bin```.
+After you are done with these options hit "Q" to save and quit this menu. In the terminal type ```$ make``` to start the series of scripts that will create an incomplete version of printer firmware. This isn't quite done yet. There is a python script that needs to make some changes to the file. Run the following to modify the binary with LCD screen enabled ```$ ./scripts/update_mks_robin.py out/klipper.bin out/Robin_nano.bin```. Alternatively, if you want to disable the LCD where you can remove the LCD board/cable run the following to modify the binary ```$ ./scripts/update_mks_robin.py out/klipper.bin out/Robin_nano43.bin```. Finally you need to make the firmware binary avaialble through the web server interface using the command ```$ cp out/Robin_nano.bin ~/mainsail/```
 
 ### Flash printer firmware
 
-Now use your web browser to visit “http://your-hostname.local/Robin_nano.bin” You will get a bin file, put it into a SD card. You are ready to flash the Klipper firmware to the printer. With the printer off, place the SD card into the printer's card slot, and then power the printer on. It should immediately flash the firmware. There is a status bar that comes up on screen while it is updating but disappears as soon as the job is complete. This is very fast and easy to miss.
+Now use your web browser to visit ```“http://your-hostname.local/Robin_nano.bin”``` You will get a bin file download. Put it into a SD card. You are ready to flash the Klipper firmware to the printer. With the printer off, place the SD card into the printer's card slot, and then power the printer on. It should immediately flash the firmware. There is a status bar that comes up on screen while it is updating but disappears as soon as the job is complete. This is very fast and easy to miss.
+
+### Connect the printer to the Pi
+
+Connect the printer with the Pi using a USB cable. Power the printer, then go to the SSH terminal and enter the command ```$ ls /dev/serial/by-id/*``` Copy the output and paste it into a note or somewhere you will have access for use in the main printer configuration file in the next step.
 
 ### Printer configuration files
 
-If you are running the board without modifying the stepper driver configuration (soldering required), then copy the following "Basic configuration" files from this github repo for your printer and add them to the list in the Mainsail webpage server under the left panel Machine tab > Config Files. If you do not plan to do any modifications in the future, simply use the upload tool in the Config Files window to add what is needed. 
+If you are running the board without modifying the stepper driver configuration, then copy the files listed in the "Basic configuration" section below. These files are hosted in this github repo for your printer. Download, then add them to the list in the Mainsail webpage server under the left panel Machine tab > Config Files. If you do not plan to do any modifications in the future, simply use the upload tool in the Config Files window to add what is needed. 
 
 Alternatively, create a new folder in Config Files named something like "KP3S-Orig." Now add all of the files listed here to this folder. After you have all of these files in the folder, go back to the main section by clicking on the "(Folder icon) .." Now add a new file called "printer.cfg" and add the following line to it ```[include KP3S-Orig/printer.cfg]``` save and close this file. Now, if you want to test configuration changes or find someone else's configuration you want to try, all you need to do is put the new config in its own folder, comment out the line you added to printer.cfg on the main page and create a reference to the new folder instead.
+
+Now in the Mainsail web interface open the printer.cfg file you got from this github repo. Navigate to the ```[MCU]``` section and look for the line ```Serial:``` Use the output you copied earlier at the end of the "Connect the printer to the Pi" section in place of what is already in the file. Then save and close this file. You are now done with installation.
 
 ### Basic configuration
 
@@ -128,7 +134,7 @@ Alternatively, create a new folder in Config Files named something like "KP3S-Or
     printing.cfg
 ```
 
-### Modifed stepper drivers for UART mode
+### Modifed stepper drivers for UART mode (soldering required)
 
 The TMC2225 datasheet has a box at the top of page 16 that says, "The UART line must be logic high during idle state..." The KP3S does not ship with stepper motor controllers' UART mode enabled. There is a 20k resistor (marked "30C") for the TMC2225 pin 17 (PDN_UART) that is connected to ground. This resistor must be removed to enable UART mode. The picture below highlights the resistor for each driver. There is a solder jumper pad near each of the drivers that needs to be bridged (aka apply a blob of solder or low value SMD resistor connecting both pads) to enable UART mode. The following is a list of each driver, the pin number of the micro controller and the port number for that pin.
 
